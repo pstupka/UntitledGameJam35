@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/arcade_view.png-3c8239777076e84bb2f6b76a045f33da.stex"
+path="res://.import/pung_buttons.png-f177db241e0aaa755e818e7550482193.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/environment/arcade_view.png"
-dest_files=[ "res://.import/arcade_view.png-3c8239777076e84bb2f6b76a045f33da.stex" ]
+source_file="res://assets/gui/pung_buttons.png"
+dest_files=[ "res://.import/pung_buttons.png-f177db241e0aaa755e818e7550482193.stex" ]
 
 [params]
 

@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/arcade_view.png-3c8239777076e84bb2f6b76a045f33da.stex"
+path="res://.import/exit_focus.png-319312c4450ce9ea9681bb163f7867e4.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/environment/arcade_view.png"
-dest_files=[ "res://.import/arcade_view.png-3c8239777076e84bb2f6b76a045f33da.stex" ]
+source_file="res://assets/gui/exit_focus.png"
+dest_files=[ "res://.import/exit_focus.png-319312c4450ce9ea9681bb163f7867e4.stex" ]
 
 [params]
 
