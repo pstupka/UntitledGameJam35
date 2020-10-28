@@ -22,6 +22,9 @@ func _ready():
 	$EndArea.translate((Vector2(-5,bounds_y*0.5)))
 	$EndArea2.translate((Vector2(bounds_x+5,bounds_y*0.5)))
 
+	$HUD/GameOverLabel.set_position(Vector2(bounds_x*0.5-129, bounds_y*0.1))
+	$HUD/GameOverLabel.hide()
+
 	register_buttons()
 	
 	print("Game pung ready")
@@ -42,8 +45,9 @@ func game_start():
 	pungball = _pungball.instance()
 	pungball.translate(Vector2(bounds_x*0.5, bounds_y*0.5))
 	add_child(pungball)
-	
+
 	$HUD/ScoreLabel.show()
+	
 	$Timer.start()
 	print("PungGame: game start")
 
@@ -71,4 +75,9 @@ func _on_button_pressed(button):
 func _on_EndArea_body_entered(body):
 	if (body.is_in_group("PungBall")):
 		$Timer.stop()
+		player.queue_free()
+		player2.queue_free()
+		pungball.queue_free()
+		$HUD/GameOverLabel.show()
+		$HUD/ScoreLabel.set("custom_colors/font_color", Color(1,1,1))
 		emit_signal("game_exit", score)
