@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/pong_actors.png-34f9c4f2814d1632e0533e6c330de79a.stex"
+path="res://.import/arcade_pong.png-02350adb354cff3c5b279d72f209500c.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/environment/Pong/pong_actors.png"
-dest_files=[ "res://.import/pong_actors.png-34f9c4f2814d1632e0533e6c330de79a.stex" ]
+source_file="res://assets/environment/arcade/arcade_pong.png"
+dest_files=[ "res://.import/arcade_pong.png-02350adb354cff3c5b279d72f209500c.stex" ]
 
 [params]
 

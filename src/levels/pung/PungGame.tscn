@@ -7,19 +7,19 @@
 [ext_resource path="res://assets/fonts/pixel.ttf" type="DynamicFontData" id=5]
 [ext_resource path="res://assets/gui/exit_focus.png" type="Texture" id=6]
 
-[sub_resource type="RectangleShape2D" id=3]
+[sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 200, 5 )
 
-[sub_resource type="DynamicFont" id=4]
+[sub_resource type="DynamicFont" id=2]
 size = 128
 font_data = ExtResource( 5 )
 
-[sub_resource type="DynamicFontData" id=8]
+[sub_resource type="DynamicFontData" id=3]
 font_path = "res://assets/fonts/pixel.ttf"
 
-[sub_resource type="DynamicFont" id=9]
+[sub_resource type="DynamicFont" id=4]
 size = 48
-font_data = SubResource( 8 )
+font_data = SubResource( 3 )
 
 [sub_resource type="DynamicFontData" id=5]
 font_path = "res://assets/fonts/pixel.ttf"
@@ -39,16 +39,14 @@ collision_layer = 2
 collision_mask = 3
 
 [node name="WallCollisionShape" type="CollisionShape2D" parent="Wall1"]
-shape = SubResource( 3 )
+shape = SubResource( 1 )
 
 [node name="Wall2" type="StaticBody2D" parent="."]
 collision_layer = 2
 collision_mask = 3
 
 [node name="WallCollisionShape2" type="CollisionShape2D" parent="Wall2"]
-shape = SubResource( 3 )
-
-[node name="Timer" type="Timer" parent="."]
+shape = SubResource( 1 )
 
 [node name="HUD" type="Control" parent="."]
 grow_horizontal = 2
@@ -58,14 +56,19 @@ __meta__ = {
 }
 
 [node name="ScoreLabel" type="Label" parent="HUD"]
-margin_left = -27.5
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -37.0
 margin_top = -68.5
-margin_right = 27.5
+margin_right = 37.0
 margin_bottom = 68.5
 grow_horizontal = 2
 grow_vertical = 2
+size_flags_horizontal = 0
 size_flags_vertical = 0
-custom_fonts/font = SubResource( 4 )
+custom_fonts/font = SubResource( 2 )
 custom_colors/font_color = Color( 1, 1, 1, 0.145098 )
 text = "0"
 __meta__ = {
@@ -73,9 +76,10 @@ __meta__ = {
 }
 
 [node name="GameOverLabel" type="Label" parent="HUD"]
-margin_right = 40.0
-margin_bottom = 14.0
-custom_fonts/font = SubResource( 9 )
+margin_top = 141.0
+margin_right = 258.0
+margin_bottom = 193.0
+custom_fonts/font = SubResource( 4 )
 text = "Game over"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -155,6 +159,5 @@ collision_mask = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="EndArea2"]
 shape = SubResource( 7 )
-[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
-[connection signal="body_entered" from="EndArea" to="." method="_on_EndArea_body_entered"]
-[connection signal="body_entered" from="EndArea2" to="." method="_on_EndArea_body_entered"]
+[connection signal="body_entered" from="EndArea" to="." method="_on_endArea_body_entered"]
+[connection signal="body_entered" from="EndArea2" to="." method="_on_endArea_body_entered"]

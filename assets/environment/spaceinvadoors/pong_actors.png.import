@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/arcade_screen.png-a500ccfb8764c4c11bcc60736ace8dad.stex"
+path="res://.import/pong_actors.png-7e9b7ee8a416a1674a8b68f6cb66bb20.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/environment/arcade_screen.png"
-dest_files=[ "res://.import/arcade_screen.png-a500ccfb8764c4c11bcc60736ace8dad.stex" ]
+source_file="res://assets/environment/pung/pong_actors.png"
+dest_files=[ "res://.import/pong_actors.png-7e9b7ee8a416a1674a8b68f6cb66bb20.stex" ]
 
 [params]
 
@@ -20,7 +20,7 @@ compress/hdr_mode=0
 compress/bptc_ldr=0
 compress/normal_map=0
 flags/repeat=0
-flags/filter=true
+flags/filter=false
 flags/mipmaps=false
 flags/anisotropic=false
 flags/srgb=2

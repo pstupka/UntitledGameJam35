@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/arcade_joystick.png-04a1513358e0caf4ed7ce7ab4631a3e1.stex"
+path="res://.import/arcade_buttons.png-3aaf18878b9a583bcf8069af27e3f8ac.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/environment/arcade_joystick.png"
-dest_files=[ "res://.import/arcade_joystick.png-04a1513358e0caf4ed7ce7ab4631a3e1.stex" ]
+source_file="res://assets/environment/arcade/arcade_buttons.png"
+dest_files=[ "res://.import/arcade_buttons.png-3aaf18878b9a583bcf8069af27e3f8ac.stex" ]
 
 [params]
 

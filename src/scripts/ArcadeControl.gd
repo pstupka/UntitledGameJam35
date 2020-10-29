@@ -1,28 +1,15 @@
 extends Node2D
 
-
-export (PackedScene) var game_scene
-var _game_scene
 var joy_direction = Vector2.ZERO
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	var _game_scene = game_scene.instance()
-	
-	add_child(_game_scene)
-	var screen_translate = Vector2(
-		(OS.get_window_size().x-_game_scene.bounds_x)*0.5,
-		120)
-
-	_game_scene.translate(screen_translate)
-	
-	_game_scene.connect("game_exit", self, "_on_game_exit")
-
+	add_to_group("Arcades")
+	print("arcade created")
 
 func _process(_delta):
 	handle_joystick_direction()
 	handle_button_pressed()
-
 
 #	Change code to trigger discrete values when using analog
 func handle_joystick_direction() :
@@ -34,7 +21,6 @@ func handle_joystick_direction() :
 							32 + joy_direction.x*32, 
 							32,
 							32)
-
 
 func handle_button_pressed():
 	if Input.is_action_pressed("arcade_button1") or Input.is_action_pressed("ui_select"):
@@ -57,7 +43,15 @@ func handle_button_pressed():
 	else:
 		$ArcadeControls/Button4.region_rect = Rect2(48, 0, 8, 8)
 
+func load_game(path, sprite_path):
+	var game_scene = ResourceLoader.load(path).instance()
+	var sprite = ResourceLoader.load(sprite_path)
+	$ArcadeSprite.texture = sprite
+	
+	var screen_translate = Vector2(
+		(OS.get_window_size().x-game_scene.bounds_x)*0.5,
+		120)
 
-func _on_game_exit(score):
-	print(score)
+	game_scene.translate(screen_translate)
 
+	add_child(game_scene)

@@ -1,10 +1,13 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://src/scripts/pung/PungBall.gd" type="Script" id=1]
 [ext_resource path="res://assets/environment/pung/pong_actors.png" type="Texture" id=2]
 
-[sub_resource type="CircleShape2D" id=2]
+[sub_resource type="CircleShape2D" id=1]
 radius = 9.44978
+
+[sub_resource type="CircleShape2D" id=2]
+radius = 12.4027
 
 [node name="PungBall" type="KinematicBody2D"]
 collision_layer = 4
@@ -19,4 +22,11 @@ region_rect = Rect2( 16, 0, 19, 18 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( -0.122086, -0.122086 )
+shape = SubResource( 1 )
+
+[node name="ScoreArea" type="Area2D" parent="."]
+collision_layer = 4
+
+[node name="ScoreCollisionShape" type="CollisionShape2D" parent="ScoreArea"]
 shape = SubResource( 2 )
+[connection signal="body_entered" from="ScoreArea" to="." method="_on_scoreArea_body_entered"]

@@ -1,7 +1,8 @@
-[gd_scene load_steps=34 format=2]
+[gd_scene load_steps=35 format=2]
 
 [ext_resource path="res://assets/environment/City_tiles.png" type="Texture" id=1]
 [ext_resource path="res://src/actors/Player.tscn" type="PackedScene" id=2]
+[ext_resource path="res://src/scripts/MainLevel.gd" type="Script" id=3]
 
 [sub_resource type="ConvexPolygonShape2D" id=1]
 points = PoolVector2Array( 0, 16, 32, 16, 32, 64, 0, 64 )
@@ -726,6 +727,7 @@ points = PoolVector2Array( 0, 16, 16, 16, 16, 64, 0, 64 )
 44/z_index = 0
 
 [node name="MainLevel" type="Node2D"]
+script = ExtResource( 3 )
 
 [node name="Map" type="Node2D" parent="."]
 

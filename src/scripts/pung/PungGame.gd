@@ -8,13 +8,17 @@ var player
 var player2
 var pungball
 
+
+onready var score_label = $HUD/ScoreLabel
+onready var game_over_label = $HUD/GameOverLabel
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	$Wall1.translate(Vector2(bounds_x*0.5, 0))
 	$Wall2.translate(Vector2(bounds_x*0.5, bounds_y))
 	
-	$HUD/ScoreLabel.set_position(Vector2(bounds_x*0.5 - 24, bounds_y*0.5 - 64))
-	$HUD/ScoreLabel.hide()
+	score_label.set_position(Vector2(bounds_x*0.5 - 24, bounds_y*0.5 - 64))
+	score_label.hide()
 
 	$Menu/MarginContainer/ColorRect/VBoxContainer/StartButton.grab_focus()
 	$Menu/MarginContainer.rect_size = Vector2(bounds_x, bounds_y)
@@ -22,15 +26,19 @@ func _ready():
 	$EndArea.translate((Vector2(-5,bounds_y*0.5)))
 	$EndArea2.translate((Vector2(bounds_x+5,bounds_y*0.5)))
 
-	$HUD/GameOverLabel.set_position(Vector2(bounds_x*0.5-129, bounds_y*0.1))
-	$HUD/GameOverLabel.hide()
-
+	game_over_label.set_position(Vector2(bounds_x*0.5-129, bounds_y*0.1))
+	game_over_label.hide()
+	
 	register_buttons()
 	
-	print("Game pung ready")
-
+	connect("game_over", GameController, "_on_arcade_game_over")
+	connect("game_exit", GameController, "_on_arcade_game_exit")
 
 func game_start():
+	score = 0
+	$HUD/ScoreLabel.text = "%d" % 0
+	$HUD/ScoreLabel.set_size(Vector2.ZERO)
+	
 	player = _player.instance()
 	player.translate(Vector2(10,bounds_y*0.5))
 	player.clamp_x_position = 10
@@ -48,20 +56,34 @@ func game_start():
 
 	$HUD/ScoreLabel.show()
 	
-	$Timer.start()
 	print("PungGame: game start")
 
+func game_over():
+	player.queue_free()
+	player2.queue_free()
+	pungball.queue_free()
+	$HUD/GameOverLabel.show()
+#	score_label.set("custom_colors/font_color", Color(1,1,1))
+	
+	emit_signal("game_over", score, "PungGame")
+	var timer = get_tree().create_timer(3.0)
+	yield(timer, "timeout")
+	
+	game_over_label.hide()
+	score_label.hide()
+	$Menu.show()
+	$Menu/MarginContainer/ColorRect/VBoxContainer/StartButton.grab_focus()
+	
+	print("game_over")
 
-func _on_Timer_timeout():
+func scored():
 	score += 1
-	$HUD/ScoreLabel.text = "%d" % score	
-
+	score_label.text = "%d" % score	
 
 func register_buttons():
 	var buttons = get_tree().get_nodes_in_group("Buttons")
 	for button in buttons:
 		button.connect("pressed", self, "_on_button_pressed", [button])
-
 
 func _on_button_pressed(button):
 	match button.name:
@@ -69,15 +91,9 @@ func _on_button_pressed(button):
 			$Menu.hide()
 			game_start()
 		"ExitButton":
-			print("Exit pressed")
+			emit_signal("game_exit")
 
-
-func _on_EndArea_body_entered(body):
+func _on_endArea_body_entered(body):
 	if (body.is_in_group("PungBall")):
-		$Timer.stop()
-		player.queue_free()
-		player2.queue_free()
-		pungball.queue_free()
-		$HUD/GameOverLabel.show()
-		$HUD/ScoreLabel.set("custom_colors/font_color", Color(1,1,1))
-		emit_signal("game_exit", score)
+		game_over()
+

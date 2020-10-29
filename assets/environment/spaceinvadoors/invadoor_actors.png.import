@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/arcade_buttons.png-93f2ecb0d141b733fefff85349e90c3d.stex"
+path="res://.import/invadoor_actors.png-5a61f6e46133a6918dc9d0245f168a68.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/environment/arcade_buttons.png"
-dest_files=[ "res://.import/arcade_buttons.png-93f2ecb0d141b733fefff85349e90c3d.stex" ]
+source_file="res://assets/environment/spaceinvadoors/invadoor_actors.png"
+dest_files=[ "res://.import/invadoor_actors.png-5a61f6e46133a6918dc9d0245f168a68.stex" ]
 
 [params]
 
@@ -20,7 +20,7 @@ compress/hdr_mode=0
 compress/bptc_ldr=0
 compress/normal_map=0
 flags/repeat=0
-flags/filter=false
+flags/filter=true
 flags/mipmaps=false
 flags/anisotropic=false
 flags/srgb=2

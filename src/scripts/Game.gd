@@ -1,7 +1,8 @@
 extends Node2D
 
 signal game_start
-signal game_exit(score)
+signal game_over(score, type)
+signal game_exit
 
 var bounds_x = 350
 var bounds_y = 300
