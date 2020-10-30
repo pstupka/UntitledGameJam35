@@ -22,4 +22,3 @@ func load_arcade_control(game):
 			arcade_to_load.load_game("res://src/levels/handoids/HandoidsGame.tscn", "res://assets/environment/arcade/arcade_pong.png") 
 	
 	SceneChanger.transition_to(arcade_to_load)
-	

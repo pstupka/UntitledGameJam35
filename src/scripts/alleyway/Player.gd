@@ -24,4 +24,3 @@ func get_direction() -> Vector2:
 		Input.get_action_strength("move_right") - Input.get_action_strength("move_left"),
 		0
 	)
-

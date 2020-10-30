@@ -25,7 +25,7 @@ font_path = "res://assets/fonts/pixel.ttf"
 size = 48
 font_data = SubResource( 4 )
 
-[node name="AlleywayGame" type="Node2D"]
+[node name="InvadoorsGame" type="Node2D"]
 script = ExtResource( 3 )
 
 [node name="HUD" type="Control" parent="."]
