@@ -40,9 +40,8 @@ func _process(_delta):
 		$Sprite3.flip_h = true
 	
 	if Input.is_action_just_pressed("interact") and is_interacting == 0:
-		GameController.load_arcade_control(GameController.ARCADE_TYPE.PUNG)
+		GameController.load_arcade_control(GameController.ARCADE_TYPE.INVADOORS)
 		is_interacting = 20
-
 	if is_interacting > 0:
 		is_interacting -= 1
 

@@ -33,6 +33,8 @@ func _ready():
 	
 	connect("game_over", GameController, "_on_arcade_game_over")
 	connect("game_exit", GameController, "_on_arcade_game_exit")
+	
+	print("Game pung ready")
 
 func game_start():
 	score = 0
