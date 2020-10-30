@@ -1,13 +1,17 @@
 extends "res://src/scripts/Game.gd"
 
-var _player = preload("res://src/actors/invadoors/Player.tscn")
-var _invadoor = preload("res://src/actors/invadoors/invadoor.tscn")
+var _player = preload("res://src/actors/handoids/Player.tscn")
+var _hand = preload("res://src/actors/handoids/Hand.tscn")
 
 var player
-var invadoors = []
+var hands = []
+var handTimeout = 1;
+var handTimer = 0;
 
 onready var score_label = $HUD/ScoreLabel
 onready var game_over_label = $HUD/GameOverLabel
+
+var gameInProgress = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -17,6 +21,7 @@ func _ready():
 	$Menu/MarginContainer/ColorRect/VBoxContainer/StartButton.grab_focus()
 	$Menu/MarginContainer.rect_size = Vector2(bounds_x, bounds_y)
 	
+
 	game_over_label.set_position(Vector2(bounds_x*0.5-129, bounds_y*0.1))
 	game_over_label.hide()
 	
@@ -25,7 +30,26 @@ func _ready():
 	connect("game_over", GameController, "_on_arcade_game_over")
 	connect("game_exit", GameController, "_on_arcade_game_exit")
 
+func _process(delta):
+	if !gameInProgress:
+		handTimer = 0;
+	elif handTimer > handTimeout:
+		handTimer = 0;
+		# spawn a hand
+		var alpha = (randi() % 360) * PI / 180
+		var hand = _hand.instance()
+		hand.translate(Vector2(350 * cos(alpha), 350 * sin(alpha)))
+	
+		hand.moveToward(Vector2(bounds_x * 0.5, bounds_y * 0.5))
+		hand.connect("destroyed", self, "scored")
+		hands.push_back(hand)
+		add_child(hand)
+	else:
+		handTimer += delta
+		
+
 func game_start():
+	gameInProgress = true
 	score = 0
 	$HUD/ScoreLabel.text = "%d" % score
 	$HUD/ScoreLabel.set_size(Vector2.ZERO)
@@ -33,35 +57,22 @@ func game_start():
 	# add player
 	player = _player.instance()
 	player.connect("destroyed", self, "game_over")
-	player.translate(Vector2(10,bounds_y - 10))
-	player.clamp_y_position = bounds_y - 10
+	player.translate(Vector2(bounds_x * 0.5, bounds_y * 0.5))
 	player.setBounds(Vector2(bounds_x, bounds_y))
 	add_child(player)
-		
-	var invadoors_X = 4;
-	var invadoors_Y = 4;
-	for col in range(invadoors_X):
-		for row in range(invadoors_Y):
-			var invadoor = _invadoor.instance();
-			invadoors.push_back(invadoor)
-			var offsetX = 75 * row + 60;
-			var offsetY = 50 * col + 25
-			if col % 2 == 0:
-				offsetX -= 30
-			invadoor.translate(Vector2( offsetX,  offsetY ))
-			invadoor.connect("destroyed", self, "scored")
-			add_child(invadoor)
+			
 	$HUD/ScoreLabel.show()
-	print("AlleywayGame: game start")
+	print("Handoids: game start")
 
 func game_over():
+	gameInProgress = false;
 	player.queue_free()
 	# remove bricks
 	var i = 0;
-	for invader in invadoors:
+	for hand in hands:
 		# don't crash on deleted bricks
-		if is_instance_valid(invader):
-			invader.queue_free();
+		if is_instance_valid(hand):
+			hand.queue_free();
 		
 
 	$HUD/GameOverLabel.show()
