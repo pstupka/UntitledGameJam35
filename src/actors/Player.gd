@@ -40,11 +40,20 @@ func _process(_delta):
 		$Sprite3.flip_h = true
 	
 	if Input.is_action_just_pressed("interact") and is_interacting == 0:
-		GameController.load_arcade_control(GameController.ARCADE_TYPE.HANDOIDS)
+		GameController.load_arcade_control(GameController.ARCADE_TYPE.INVADOORS)
 		is_interacting = 20
 	if is_interacting > 0:
 		is_interacting -= 1
 
+	#DEBUG
+	if Input.is_action_just_pressed("arcade_button1"):
+		GameController.load_arcade_control(GameController.ARCADE_TYPE.ALLEYWAY)
+	if Input.is_action_just_pressed("arcade_button2"):
+		GameController.load_arcade_control(GameController.ARCADE_TYPE.PUNG)
+	if Input.is_action_just_pressed("arcade_button3"):
+		GameController.load_arcade_control(GameController.ARCADE_TYPE.PINVADOORS)
+	if Input.is_action_just_pressed("arcade_button4"):
+		GameController.load_arcade_control(GameController.ARCADE_TYPE.HANDOIDS)
 	
 	match state:
 		STATES.IDLE:
