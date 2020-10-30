@@ -18,3 +18,4 @@ position = Vector2( 0.497887, -0.0524092 )
 texture = ExtResource( 1 )
 region_enabled = true
 region_rect = Rect2( 0, 32, 1, 4 )
+[connection signal="area_entered" from="." to="." method="_on_Bullet_body_entered"]

@@ -84,5 +84,6 @@ func spawn_enemies():
 		enemy = _enemy_res.instance()
 		enemy.translate(Vector2(50 + i*32, 50))
 		enemy.scale = Vector2(2,2)
+		enemy.connect("killed", self, "scored")
 		add_child(enemy)
 		
