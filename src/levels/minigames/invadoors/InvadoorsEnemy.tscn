@@ -1,0 +1,56 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://src/scripts/InvadoorsEnemy.gd" type="Script" id=1]
+[ext_resource path="res://assets/environment/spaceinvadoors/invadoor_actors.png" type="Texture" id=2]
+[ext_resource path="res://src/levels/minigames/ExplosionParticles.tscn" type="PackedScene" id=3]
+
+[sub_resource type="RectangleShape2D" id=4]
+extents = Vector2( 5.93617, 4.44226 )
+
+[sub_resource type="RectangleShape2D" id=5]
+extents = Vector2( 8.69786, 5.35987 )
+
+[sub_resource type="Animation" id=3]
+resource_name = "idle"
+length = 0.6
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:region_rect")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ Rect2( 32, 0, 16, 8 ), Rect2( 48, 0, 16, 8 ) ]
+}
+
+[node name="InvadoorEnemy" type="KinematicBody2D"]
+collision_layer = 4
+collision_mask = 8
+script = ExtResource( 1 )
+explosion = ExtResource( 3 )
+
+[node name="Sprite" type="Sprite" parent="."]
+position = Vector2( 0.408377, 0.306281 )
+texture = ExtResource( 2 )
+region_enabled = true
+region_rect = Rect2( 48, 0, 16, 8 )
+region_filter_clip = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( 0.971759, 0.176235 )
+shape = SubResource( 4 )
+
+[node name="ScoreArea" type="Area2D" parent="."]
+collision_layer = 4
+
+[node name="ScoreCollisionShape" type="CollisionShape2D" parent="ScoreArea"]
+position = Vector2( 0.894966, -9.53674e-07 )
+shape = SubResource( 5 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/idle = SubResource( 3 )
+[connection signal="body_entered" from="ScoreArea" to="." method="_on_scoreArea_body_entered"]

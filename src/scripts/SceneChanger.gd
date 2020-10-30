@@ -11,8 +11,8 @@ func _ready():
 	main_scene = current_scene
 	_anim_player.play_backwards("Fade")
 
-func goto_scene(path):
-	call_deferred("_deferred_goto_scene", path)
+func goto_scene(scene):
+	call_deferred("_deferred_goto_scene", scene)
 
 # Kot universal method -- to write it better
 func _deferred_goto_scene(scene):
