@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://src/scripts/InvadoorsEnemy.gd" type="Script" id=1]
 [ext_resource path="res://assets/environment/spaceinvadoors/invadoor_actors.png" type="Texture" id=2]
@@ -6,9 +6,6 @@
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 5.93617, 4.44226 )
-
-[sub_resource type="RectangleShape2D" id=2]
-extents = Vector2( 8.69786, 5.35987 )
 
 [sub_resource type="Animation" id=3]
 resource_name = "idle"
@@ -37,21 +34,12 @@ explosion = ExtResource( 3 )
 position = Vector2( 0.408377, 0.306281 )
 texture = ExtResource( 2 )
 region_enabled = true
-region_rect = Rect2( 48, 0, 16, 8 )
+region_rect = Rect2( 32, 0, 16, 8 )
 region_filter_clip = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( 0.971759, 0.176235 )
 shape = SubResource( 1 )
 
-[node name="ScoreArea" type="Area2D" parent="."]
-collision_layer = 4
-
-[node name="ScoreCollisionShape" type="CollisionShape2D" parent="ScoreArea"]
-position = Vector2( 0.894966, -9.53674e-07 )
-shape = SubResource( 2 )
-
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/idle = SubResource( 3 )
-[connection signal="area_entered" from="ScoreArea" to="." method="_on_ScoreArea_area_entered"]
-[connection signal="body_entered" from="ScoreArea" to="." method="_on_scoreArea_body_entered"]

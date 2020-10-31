@@ -34,6 +34,7 @@ func game_start():
 
 	player = _player_res.instance()
 	player.clamp_y_position = bounds_y-10
+	player.connect("destroyed", self, "_on_player_destroyed")
 	add_child(player)
 
 	spawn_enemies()
@@ -43,7 +44,11 @@ func game_start():
 	$HUD/ScoreLabel.show()
 
 func game_over():
-
+	# remove the actors
+	var enemies = get_tree().get_nodes_in_group("InvadoorsEnemy")
+	for enemy in enemies:
+		enemy.queue_free()
+	player.queue_free();
 	$HUD/GameOverLabel.show()
 #	score_label.set("custom_colors/font_color", Color(1,1,1))
 	
@@ -86,4 +91,10 @@ func spawn_enemies():
 		enemy.scale = Vector2(2,2)
 		enemy.connect("killed", self, "scored")
 		add_child(enemy)
-		
+
+func _on_player_destroyed():
+	game_over()
+
+func _on_LowerBound_body_entered(body):
+	if body.is_in_group("InvadoorsEnemy"):
+		game_over();

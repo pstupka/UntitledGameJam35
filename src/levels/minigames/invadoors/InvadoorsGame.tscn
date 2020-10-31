@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://assets/fonts/pixel.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://assets/gui/exit_focus.png" type="Texture" id=2]
@@ -25,6 +25,9 @@ font_path = "res://assets/fonts/pixel.ttf"
 [sub_resource type="DynamicFont" id=5]
 size = 40
 font_data = SubResource( 4 )
+
+[sub_resource type="RectangleShape2D" id=6]
+extents = Vector2( 175, 10 )
 
 [node name="InvadoorsGame" type="Node2D"]
 script = ExtResource( 6 )
@@ -144,3 +147,12 @@ region_rect = Rect2( 0, 0, 32, 32 )
 
 [node name="Timer" type="Timer" parent="."]
 wait_time = 0.5
+
+[node name="LowerBound" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LowerBound"]
+position = Vector2( 175, 300 )
+shape = SubResource( 6 )
+[connection signal="body_entered" from="LowerBound" to="." method="_on_LowerBound_body_entered"]
