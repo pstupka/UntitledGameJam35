@@ -1,5 +1,6 @@
 extends KinematicBody2D
 
+var _explosion = preload("res://src/levels/minigames/ExplosionParticles.tscn")
 export var speed = 200
 var _direction = Vector2(-1, -0.1).normalized()
 
@@ -21,3 +22,13 @@ func _physics_process(delta):
 
 func speedUp():
 	speed += 10
+
+func kill():
+	spawn_particle()
+	queue_free()
+
+func spawn_particle():
+	var expl = _explosion.instance()
+	expl.emitting = true
+	expl.global_position = Vector2(self.position.x, self.position.y)
+	get_parent().add_child(expl)

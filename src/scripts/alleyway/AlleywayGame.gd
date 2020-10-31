@@ -83,17 +83,16 @@ func start_game_phase():
 	$HUD/ScoreLabel.show()
 	print("AlleywayGame: game start")
 	
-
 func game_over():
-	player.queue_free()
-	# remove bricks
+	# remove actors
+	player.kill()
 	var i = 0;
 	for brick in bricks:
 		# don't crash on deleted bricks
 		if is_instance_valid(brick):
-			brick.queue_free();
-		
-	ball.queue_free()
+			brick.kill();
+	ball.kill()
+	
 	$HUD/GameOverLabel.show()
 	
 	emit_signal("game_over", score, "AlleywayGame")
