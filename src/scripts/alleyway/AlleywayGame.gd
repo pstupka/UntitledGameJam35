@@ -1,12 +1,11 @@
 extends "res://src/scripts/Game.gd"
 
 var _player = preload("res://src/actors/alleyway/Player.tscn")
-var _pungball = preload("res://src/actors/PungBall.tscn")
+var _ball = preload("res://src/actors/alleyway/Ball.tscn")
 var _brick = preload("res://src/actors/alleyway/Brick.tscn")
 
 var player
-var player2
-var pungball
+var ball
 var bricks = []
 
 onready var score_label = $HUD/ScoreLabel
@@ -16,18 +15,13 @@ onready var game_over_label = $HUD/GameOverLabel
 func _ready():
 	score_label.set_position(Vector2(bounds_x*0.5 - 24, bounds_y*0.5 - 64))
 	score_label.hide()
-
 	$Menu/MarginContainer/ColorRect/VBoxContainer/StartButton.grab_focus()
 	$Menu/MarginContainer.rect_size = Vector2(bounds_x, bounds_y)
-
-	#$EndArea.translate((Vector2(-5,bounds_y*0.5)))
-	#$EndArea2.translate((Vector2(bounds_x+5,bounds_y*0.5)))
-
+	$HUD/Countdown.set_position(Vector2(bounds_x * 0.5, bounds_y - 75))
 	game_over_label.set_position(Vector2(bounds_x*0.5-129, bounds_y*0.1))
 	game_over_label.hide()
 	
 	register_buttons()
-	
 	connect("game_over", GameController, "_on_arcade_game_over")
 	connect("game_exit", GameController, "_on_arcade_game_exit")
 
@@ -42,12 +36,6 @@ func game_start():
 	player.clamp_y_position = bounds_y - 10
 	add_child(player)
 	
-	# add ball
-	pungball = _pungball.instance()
-	pungball.translate(Vector2(bounds_x * 0.5, bounds_y * 0.8))
-	pungball.speed = 200
-	add_child(pungball)
-
 	# add bricks
 	var bricksX = 4
 	var bricksY = 8
@@ -59,10 +47,42 @@ func game_start():
 			var offsetX = 75 * row;
 			var offsetY = 20 * col
 			brick.translate(Vector2( 60 + offsetX, 25 + offsetY ))
-			brick.connect("brick_destroyed", self, "scored")
+			brick.connect("brick_destroyed", self, "on_brick_destroyed")
 			add_child(brick)
+	start_prepare_phase();
+
+var prepareFlag = false
+var prepareCountdown = 3
+func _process(delta):
+	if !prepareFlag:
+		return;
+	
+	if prepareCountdown < 0:
+		prepareFlag = false
+		$HUD/Countdown.hide()
+		start_game_phase()
+
+	$HUD/Countdown.text = "%d" % ceil(prepareCountdown)
+	prepareCountdown -= delta;
+	
+
+func start_prepare_phase():
+	print("Prepare phase")
+	prepareCountdown = 3;
+	$HUD/Countdown.show()
+	prepareFlag = true;
+	pass
+	
+func start_game_phase():
+	# add ball
+	ball = _ball.instance()
+	ball.translate(Vector2(bounds_x * 0.5, bounds_y * 0.8))
+	ball.speed = 200
+	add_child(ball)
+	
 	$HUD/ScoreLabel.show()
 	print("AlleywayGame: game start")
+	
 
 func game_over():
 	player.queue_free()
@@ -73,11 +93,10 @@ func game_over():
 		if is_instance_valid(brick):
 			brick.queue_free();
 		
-	pungball.queue_free()
+	ball.queue_free()
 	$HUD/GameOverLabel.show()
-#	score_label.set("custom_colors/font_color", Color(1,1,1))
 	
-	emit_signal("game_over", score, "PungGame")
+	emit_signal("game_over", score, "AlleywayGame")
 	var timer = get_tree().create_timer(3.0)
 	yield(timer, "timeout")
 	
@@ -85,9 +104,15 @@ func game_over():
 	score_label.hide()
 	$Menu.show()
 	$Menu/MarginContainer/ColorRect/VBoxContainer/StartButton.grab_focus()
-	
 	print("game_over")
 
+func on_brick_destroyed():
+	scored()
+	# speed up on each five
+	if score % 5 == 0:
+		ball.speedUp()
+		player.speedUp()
+		
 func scored():
 	score += 1
 	score_label.text = "%d" % score	
@@ -106,5 +131,5 @@ func _on_button_pressed(button):
 			emit_signal("game_exit")
 
 func _on_endArea_body_entered(body):
-	if (body.is_in_group("PungBall")):
+	if (body.is_in_group("Ball")):
 		game_over()

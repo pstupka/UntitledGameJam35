@@ -4,11 +4,12 @@
 [ext_resource path="res://assets/environment/pung/pong_actors.png" type="Texture" id=2]
 
 [sub_resource type="CapsuleShape2D" id=1]
-radius = 2.86811
-height = 58.6196
+radius = 3.057
+height = 57.661
 
 [node name="PungPlayer" type="KinematicBody2D"]
 rotation = 1.5708
+scale = Vector2( 0.75, 0.57 )
 collision_mask = 7
 script = ExtResource( 1 )
 
