@@ -1,5 +1,6 @@
 extends KinematicBody2D
-var goodLazor = preload("res://src/actors/handoids/Projectile.tscn")
+var _projectile = preload("res://src/actors/handoids/Projectile.tscn")
+var _explosion = preload("res://src/levels/minigames/ExplosionParticles.tscn")
 
 var _speed = 0
 var _acc = 0;
@@ -7,17 +8,12 @@ var _direction = Vector2.ZERO
 var _velocity = Vector2.ZERO
 var _rotation = 0
 var _bounds = Vector2.ZERO
-var _canFire = true;
+var _canFire = 0;
 signal destroyed
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	add_to_group("HandoidsPlayer")
-	var timer = Timer.new()
-	timer.set_wait_time(0.6)
-	timer.connect("timeout", self, "_on_timer_timeout")
-	add_child(timer)
-	timer.start()
 
 func setBounds(bounds):
 	_bounds = bounds
@@ -28,6 +24,11 @@ func destroy():
 	
 func _physics_process(_delta):
 	rotation_degrees += _rotation
+	
+	# apply current direction if acceleration is applied
+	if _acc != 0:
+		var currentDirection = getDirection()
+		_direction = (_direction + currentDirection).normalized()
 	_velocity = move_and_slide(_direction * _speed)
 	
 	# keep the player inside the play area
@@ -45,21 +46,22 @@ func _physics_process(_delta):
 func _process(_delta):
 	_speed = getSpeed(_speed);
 	_rotation = getRotation();
-	_direction = getDirection()
 
 	# Fire handling + throttling	
-	if Input.is_action_just_pressed("ui_select") and _canFire:
+	if Input.is_action_just_pressed("ui_select") and _canFire <= 0:
 		spawnProjectile()
-		_canFire = false;
-
+		_canFire = 10;
+	if _canFire > 0:
+		_canFire -= 1;
+	
 func getSpeed(speed):
-	var acc = (Input.get_action_strength("move_up") - Input.get_action_strength("move_down")) * 10 
-	if acc != 0 and abs(_speed) < 100:
-		speed += acc
+	_acc = (Input.get_action_strength("move_up") - Input.get_action_strength("move_down")) * 10 
+	if _acc != 0 and abs(_speed) < 100:
+		speed += _acc
 	elif abs(_speed) < 20:
 		speed = 0;
 	else:
-		speed *= 0.95
+		speed *= 0.99
 	return speed
 
 func getRotation():
@@ -72,8 +74,18 @@ func _on_timer_timeout():
 	_canFire = true;
 	
 func spawnProjectile():
-	var lazor = goodLazor.instance();
-	lazor.translate(self.position)
-	lazor.rotation = rotation
-	lazor.moveTowards(_direction)
-	get_parent().add_child(lazor)
+	var projectile = _projectile.instance();
+	projectile.translate(self.position)
+	projectile.rotation = rotation
+	projectile.moveTowards(getDirection())
+	get_parent().add_child(projectile)
+
+func kill():
+	spawn_explosion();
+	queue_free()
+
+func spawn_explosion():
+	var expl = _explosion.instance()
+	expl.emitting = true
+	expl.global_position = Vector2(self.position.x, self.position.y)
+	get_parent().add_child(expl)

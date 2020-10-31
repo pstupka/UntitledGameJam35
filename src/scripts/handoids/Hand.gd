@@ -1,9 +1,11 @@
 extends Area2D
 
+var _explosion = preload("res://src/levels/minigames/ExplosionParticles.tscn")
 signal destroyed;
 
 var life = 2;
 var dir = Vector2.ZERO
+var _speed = 1
 
 func _ready():
 	add_to_group("HandoidsHands")
@@ -16,7 +18,7 @@ func applyDamage():
 		$Crack2.visible = true;
 	else:
 		emit_signal("destroyed")
-		queue_free()
+		kill()
 	life -= 1
 
 func moveToward(_dir):
@@ -26,7 +28,10 @@ func moveToward(_dir):
 func _process(delta):
 	if dir == Vector2.ZERO:
 		pass;
-	position -= dir
+	position -= dir * _speed
+
+func set_speed(speed):
+	_speed = speed
 
 # this should be responsible for the player being hit
 func _on_Area2D_body_entered(body):
@@ -40,3 +45,12 @@ func _on_Area2D_area_entered(area):
 		applyDamage()
 		area.queue_free()
 
+func kill():
+	spawn_explosion()
+	queue_free()
+
+func spawn_explosion():
+	var expl = _explosion.instance()
+	expl.emitting = true
+	expl.global_position = Vector2(self.position.x, self.position.y)
+	get_parent().add_child(expl)

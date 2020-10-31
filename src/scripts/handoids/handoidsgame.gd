@@ -5,8 +5,9 @@ var _hand = preload("res://src/actors/handoids/Hand.tscn")
 
 var player
 var hands = []
-var handTimeout = 1;
+
 var handTimer = 0;
+var handLevel = 1
 
 onready var score_label = $HUD/ScoreLabel
 onready var game_over_label = $HUD/GameOverLabel
@@ -17,40 +18,48 @@ var gameInProgress = false
 func _ready():
 	score_label.set_position(Vector2(bounds_x*0.5 - 24, bounds_y*0.5 - 64))
 	score_label.hide()
-
 	$Menu/MarginContainer/ColorRect/VBoxContainer/StartButton.grab_focus()
 	$Menu/MarginContainer.rect_size = Vector2(bounds_x, bounds_y)
-	
-
 	game_over_label.set_position(Vector2(bounds_x*0.5-129, bounds_y*0.1))
 	game_over_label.hide()
 	
 	register_buttons()
-	
 	connect("game_over", GameController, "_on_arcade_game_over")
 	connect("game_exit", GameController, "_on_arcade_game_exit")
-
+	
 func _process(delta):
 	if !gameInProgress:
-		handTimer = 0;
-	elif handTimer > handTimeout:
-		handTimer = 0;
-		# spawn a hand
-		var alpha = (randi() % 360) * PI / 180
-		var hand = _hand.instance()
-		hand.translate(Vector2(350 * cos(alpha), 350 * sin(alpha)))
-	
-		hand.moveToward(Vector2(bounds_x * 0.5, bounds_y * 0.5))
-		hand.connect("destroyed", self, "scored")
-		hands.push_back(hand)
-		add_child(hand)
+		return
+	# spawn hands
+	if handTimer < 0:
+		randomize()
+		handTimer = (randf() * 2.0 / handLevel) + 1 / handLevel
+		spawnHand()
 	else:
-		handTimer += delta
-		
+		handTimer -= delta
+
+func levelUp():
+	# smaller and faster hands	
+	handLevel += 0.15
+	
+func spawnHand():
+	# spawn a hand
+	randomize()
+	var alpha = (randi() % 360) * PI / 180
+	var hand = _hand.instance()
+	hand.translate(Vector2(350 * cos(alpha), 350 * sin(alpha)))
+	hand.scale /= handLevel
+	hand.moveToward(Vector2(bounds_x * 0.5, bounds_y * 0.5))
+	hand.connect("destroyed", self, "_on_hand_destroyed")
+	hand.set_speed(handLevel)
+	hands.push_back(hand)
+	add_child(hand)
 
 func game_start():
 	gameInProgress = true
 	score = 0
+	handTimer = (randf() * 3.0 / handLevel) + 2 / handLevel
+	handLevel = 1
 	$HUD/ScoreLabel.text = "%d" % score
 	$HUD/ScoreLabel.set_size(Vector2.ZERO)
 	
@@ -66,19 +75,17 @@ func game_start():
 
 func game_over():
 	gameInProgress = false;
-	player.queue_free()
+	player.kill()
 	# remove bricks
-	var i = 0;
-	for hand in hands:
-		# don't crash on deleted bricks
+	
+	for hand in get_tree().get_nodes_in_group("HandoidsHands"):
 		if is_instance_valid(hand):
-			hand.queue_free();
+			hand.kill()
 		
-
 	$HUD/GameOverLabel.show()
 #	score_label.set("custom_colors/font_color", Color(1,1,1))
 	
-	emit_signal("game_over", score, "PungGame")
+	emit_signal("game_over", score, "HandoidGame")
 	var timer = get_tree().create_timer(3.0)
 	yield(timer, "timeout")
 	
@@ -86,13 +93,17 @@ func game_over():
 	score_label.hide()
 	$Menu.show()
 	$Menu/MarginContainer/ColorRect/VBoxContainer/StartButton.grab_focus()
-	
 	print("game_over")
 
+func _on_hand_destroyed():
+	scored()
+	if score % 20 == 0:
+		levelUp()
+	
 func scored():
-	score += 1
+	score += 10
 	score_label.text = "%d" % score	
-
+		
 func register_buttons():
 	var buttons = get_tree().get_nodes_in_group("Buttons")
 	for button in buttons:
