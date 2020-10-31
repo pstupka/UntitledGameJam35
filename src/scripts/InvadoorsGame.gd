@@ -1,9 +1,8 @@
 extends "res://src/scripts/Game.gd"
 
 var _player_res = preload("res://src/levels/minigames/invadoors/InvadoorsPlayer.tscn")
-var player
-
 var _enemy_res = preload("res://src/levels/minigames/invadoors/InvadoorsEnemy.tscn")
+var player
 
 onready var score_label = $HUD/ScoreLabel
 onready var game_over_label = $HUD/GameOverLabel
@@ -47,8 +46,8 @@ func game_over():
 	# remove the actors
 	var enemies = get_tree().get_nodes_in_group("InvadoorsEnemy")
 	for enemy in enemies:
-		enemy.queue_free()
-	player.queue_free();
+		enemy.terminate()
+	player.terminate();
 	$HUD/GameOverLabel.show()
 #	score_label.set("custom_colors/font_color", Color(1,1,1))
 	

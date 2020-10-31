@@ -1,10 +1,12 @@
 extends KinematicBody2D
 
+var _explosion = preload("res://src/levels/minigames/ExplosionParticles.tscn")
+var bullet_res = preload("res://src/levels/minigames/invadoors/Bullet.tscn")
 export var speed = 200
 var _direction = Vector2.ZERO
 var _velocity = Vector2.ZERO
 var clamp_y_position = 0
-var bullet_res = preload("res://src/levels/minigames/invadoors/Bullet.tscn")
+
 signal destroyed
 
 # Called when the node enters the scene tree for the first time.
@@ -29,7 +31,15 @@ func get_direction() -> Vector2:
 func kill():
 	emit_signal("destroyed")
 
+
 func shoot():
 	var bullet = bullet_res.instance()
 	bullet.translate(Vector2(self.position.x, self.position.y-5))
 	get_parent().add_child(bullet)
+
+func terminate():
+	var expl = _explosion.instance()
+	expl.emitting = true
+	expl.global_position = Vector2(self.position.x, self.position.y)
+	get_parent().add_child(expl)
+	queue_free()
