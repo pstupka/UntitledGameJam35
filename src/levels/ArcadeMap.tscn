@@ -1,0 +1,273 @@
+[gd_scene load_steps=21 format=2]
+
+[ext_resource path="res://assets/ArcadeMachine.png" type="Texture" id=1]
+[ext_resource path="res://assets/environment/City_tiles.png" type="Texture" id=2]
+[ext_resource path="res://src/actors/Player.tscn" type="PackedScene" id=3]
+[ext_resource path="res://src/scripts/ArcadeMap.gd" type="Script" id=4]
+
+[sub_resource type="ConvexPolygonShape2D" id=1]
+points = PoolVector2Array( 151.14, 173.401, 21.7358, 172.195, 21.3339, 164.157, 151.14, 164.157 )
+
+[sub_resource type="ConvexPolygonShape2D" id=2]
+points = PoolVector2Array( 15.7076, 91.0157, 23.3433, 91.0157, 23.3433, 164.559, 15.7076, 164.559 )
+
+[sub_resource type="ConvexPolygonShape2D" id=3]
+points = PoolVector2Array( 20.1283, 68.9124, 69.5592, 68.9124, 69.5592, 90.2119, 20.1283, 90.2119 )
+
+[sub_resource type="ConvexPolygonShape2D" id=4]
+points = PoolVector2Array( 150.739, 89.81, 103.317, 89.81, 103.317, 68.1086, 150.739, 68.1086 )
+
+[sub_resource type="ConvexPolygonShape2D" id=5]
+points = PoolVector2Array( 159.58, 170.989, 150.337, 170.989, 150.337, 90.6138, 159.58, 90.6138 )
+
+[sub_resource type="ConvexPolygonShape2D" id=6]
+points = PoolVector2Array( 136.271, 23.0984, 37.0072, 23.0984, 37.0072, 13.4533, 136.271, 13.4533 )
+
+[sub_resource type="ConvexPolygonShape2D" id=7]
+points = PoolVector2Array( 39.4184, 72.9312, 21.7358, 72.9312, 21.7358, 17.0702, 39.4184, 17.0702 )
+
+[sub_resource type="ConvexPolygonShape2D" id=8]
+points = PoolVector2Array( 134.663, 19.4814, 145.112, 19.4814, 145.112, 75.3424, 134.663, 75.3424 )
+
+[sub_resource type="ConvexPolygonShape2D" id=9]
+points = PoolVector2Array( 70.4299, 101.213, 21.5348, 101.213, 21.5348, 78.1053, 70.4299, 78.1053 )
+
+[sub_resource type="ConvexPolygonShape2D" id=10]
+points = PoolVector2Array( 103.585, 78.1053, 152.48, 78.1053, 152.48, 100.878, 103.585, 100.878 )
+
+[sub_resource type="ConvexPolygonShape2D" id=11]
+points = PoolVector2Array( 21.7559, 15.9089, 48.8826, 15.9089, 48.8826, 31.3142, 21.7559, 31.3142 )
+
+[sub_resource type="ConvexPolygonShape2D" id=12]
+points = PoolVector2Array( 20.4163, 30.9793, 2.66675, 30.9793, 2.66675, 3.18282, 20.4163, 3.18282 )
+
+[sub_resource type="TileSet" id=13]
+0/name = "City_tiles.png 0"
+0/texture = ExtResource( 2 )
+0/tex_offset = Vector2( 0, 0 )
+0/modulate = Color( 1, 1, 1, 1 )
+0/region = Rect2( 297, 202, 173, 198 )
+0/tile_mode = 0
+0/occluder_offset = Vector2( 0, 0 )
+0/navigation_offset = Vector2( 0, 0 )
+0/shape_offset = Vector2( 0, 0 )
+0/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+0/shape = SubResource( 1 )
+0/shape_one_way = false
+0/shape_one_way_margin = 1.0
+0/shapes = [ {
+"autotile_coord": Vector2( 0, 0 ),
+"one_way": false,
+"one_way_margin": 1.0,
+"shape": SubResource( 1 ),
+"shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
+}, {
+"autotile_coord": Vector2( 0, 0 ),
+"one_way": false,
+"one_way_margin": 1.0,
+"shape": SubResource( 2 ),
+"shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
+}, {
+"autotile_coord": Vector2( 0, 0 ),
+"one_way": false,
+"one_way_margin": 1.0,
+"shape": SubResource( 3 ),
+"shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
+}, {
+"autotile_coord": Vector2( 0, 0 ),
+"one_way": false,
+"one_way_margin": 1.0,
+"shape": SubResource( 4 ),
+"shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
+}, {
+"autotile_coord": Vector2( 0, 0 ),
+"one_way": false,
+"one_way_margin": 1.0,
+"shape": SubResource( 5 ),
+"shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
+}, {
+"autotile_coord": Vector2( 0, 0 ),
+"one_way": false,
+"one_way_margin": 1.0,
+"shape": SubResource( 6 ),
+"shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
+}, {
+"autotile_coord": Vector2( 0, 0 ),
+"one_way": false,
+"one_way_margin": 1.0,
+"shape": SubResource( 7 ),
+"shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
+}, {
+"autotile_coord": Vector2( 0, 0 ),
+"one_way": false,
+"one_way_margin": 1.0,
+"shape": SubResource( 8 ),
+"shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
+}, {
+"autotile_coord": Vector2( 0, 0 ),
+"one_way": false,
+"one_way_margin": 1.0,
+"shape": SubResource( 9 ),
+"shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
+}, {
+"autotile_coord": Vector2( 0, 0 ),
+"one_way": false,
+"one_way_margin": 1.0,
+"shape": SubResource( 10 ),
+"shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
+} ]
+0/z_index = 0
+1/name = "City_tiles.png 1"
+1/texture = ExtResource( 2 )
+1/tex_offset = Vector2( 0, 0 )
+1/modulate = Color( 1, 1, 1, 1 )
+1/region = Rect2( 448, 282, 0, 0 )
+1/tile_mode = 0
+1/occluder_offset = Vector2( 0, 0 )
+1/navigation_offset = Vector2( 0, 0 )
+1/shape_offset = Vector2( 0, 0 )
+1/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+1/shape_one_way = false
+1/shape_one_way_margin = 0.0
+1/shapes = [  ]
+1/z_index = 0
+2/name = "City_tiles.png 2"
+2/texture = ExtResource( 2 )
+2/tex_offset = Vector2( 0, 0 )
+2/modulate = Color( 1, 1, 1, 1 )
+2/region = Rect2( 492, 240, 58, 32 )
+2/tile_mode = 0
+2/occluder_offset = Vector2( 0, 0 )
+2/navigation_offset = Vector2( 0, 0 )
+2/shape_offset = Vector2( 0, 0 )
+2/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+2/shape = SubResource( 11 )
+2/shape_one_way = false
+2/shape_one_way_margin = 1.0
+2/shapes = [ {
+"autotile_coord": Vector2( 0, 0 ),
+"one_way": false,
+"one_way_margin": 1.0,
+"shape": SubResource( 11 ),
+"shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
+}, {
+"autotile_coord": Vector2( 0, 0 ),
+"one_way": false,
+"one_way_margin": 1.0,
+"shape": SubResource( 12 ),
+"shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
+} ]
+2/z_index = 0
+
+[sub_resource type="RectangleShape2D" id=14]
+extents = Vector2( 15, 10 )
+
+[sub_resource type="RectangleShape2D" id=15]
+extents = Vector2( 8.219, 11.044 )
+
+[sub_resource type="CircleShape2D" id=16]
+
+[node name="ArcadeMap" type="TileMap"]
+tile_set = SubResource( 13 )
+format = 1
+tile_data = PoolIntArray( -327676, 2, 0, 65544, 0, 0, 65545, 2, 0 )
+script = ExtResource( 4 )
+
+[node name="ScoreboardArea" type="Area2D" parent="."]
+position = Vector2( 612.273, 95.0202 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ScoreboardArea"]
+shape = SubResource( 14 )
+
+[node name="PongMachine" type="Sprite" parent="."]
+position = Vector2( 542.795, 165.677 )
+texture = ExtResource( 1 )
+
+[node name="Collider" type="KinematicBody2D" parent="PongMachine"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PongMachine/Collider"]
+position = Vector2( 0, -1.307 )
+shape = SubResource( 15 )
+
+[node name="PongArea" type="Area2D" parent="PongMachine"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PongMachine/PongArea"]
+position = Vector2( 0.372, 10.996 )
+shape = SubResource( 16 )
+
+[node name="InvadoorsMachine" type="Sprite" parent="."]
+position = Vector2( 559.217, 85 )
+texture = ExtResource( 1 )
+
+[node name="Collider2" type="KinematicBody2D" parent="InvadoorsMachine"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InvadoorsMachine/Collider2"]
+position = Vector2( 0, -1.307 )
+shape = SubResource( 15 )
+
+[node name="InvadoorsArea" type="Area2D" parent="InvadoorsMachine"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InvadoorsMachine/InvadoorsArea"]
+position = Vector2( 0.372, 10.996 )
+shape = SubResource( 16 )
+
+[node name="HandoidsMachine" type="Sprite" parent="."]
+position = Vector2( 638.412, 85 )
+texture = ExtResource( 1 )
+
+[node name="Collider3" type="KinematicBody2D" parent="HandoidsMachine"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HandoidsMachine/Collider3"]
+position = Vector2( 0, -1.307 )
+shape = SubResource( 15 )
+
+[node name="HandoidsArea" type="Area2D" parent="HandoidsMachine"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HandoidsMachine/HandoidsArea"]
+position = Vector2( 0.372, 10.996 )
+shape = SubResource( 16 )
+
+[node name="AlleywayMachine" type="Sprite" parent="."]
+position = Vector2( 654.845, 165.677 )
+texture = ExtResource( 1 )
+
+[node name="Collider4" type="KinematicBody2D" parent="AlleywayMachine"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AlleywayMachine/Collider4"]
+position = Vector2( 0, -1.307 )
+shape = SubResource( 15 )
+
+[node name="AlleywayArea" type="Area2D" parent="AlleywayMachine"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AlleywayMachine/AlleywayArea"]
+position = Vector2( 0.372, 10.996 )
+shape = SubResource( 16 )
+
+[node name="Player" parent="." instance=ExtResource( 3 )]
+position = Vector2( 602.262, 199.868 )
+scale = Vector2( 0.75, 0.75 )
+
+[node name="ScoreBoard" type="MarginContainer" parent="."]
+visible = false
+margin_left = 585.0
+margin_top = -1.0
+margin_right = 625.0
+margin_bottom = 67.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Scorelabel" type="Label" parent="ScoreBoard"]
+margin_top = 27.0
+margin_right = 40.0
+margin_bottom = 41.0
+[connection signal="body_entered" from="ScoreboardArea" to="." method="_on_ScoreboardArea_body_entered"]
+[connection signal="body_exited" from="ScoreboardArea" to="." method="_on_ScoreboardArea_body_exited"]
+[connection signal="body_entered" from="PongMachine/PongArea" to="." method="_on_PongArea_body_entered"]
+[connection signal="body_exited" from="PongMachine/PongArea" to="." method="_on_PongArea_body_exited"]
+[connection signal="body_entered" from="InvadoorsMachine/InvadoorsArea" to="." method="_on_InvadoorsArea_body_entered"]
+[connection signal="body_exited" from="InvadoorsMachine/InvadoorsArea" to="." method="_on_InvadoorsArea_body_exited"]
+[connection signal="body_entered" from="HandoidsMachine/HandoidsArea" to="." method="_on_HandoidsArea_body_entered"]
+[connection signal="body_exited" from="HandoidsMachine/HandoidsArea" to="." method="_on_HandoidsArea_body_exited"]
+[connection signal="body_entered" from="AlleywayMachine/AlleywayArea" to="." method="_on_AlleywayArea_body_entered"]
+[connection signal="body_exited" from="AlleywayMachine/AlleywayArea" to="." method="_on_AlleywayArea_body_exited"]

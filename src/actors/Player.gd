@@ -2,7 +2,7 @@ extends KinematicBody2D
 
 
 onready var animationPlayer = $Animation 
-
+signal interact
 
 enum STATES {IDLE, RUN, SMASH, INTERACT}
 var state = STATES.IDLE
@@ -15,7 +15,7 @@ var is_interacting = 0
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass
+	add_to_group("MainPlayer")
 
 
 func _physics_process(_delta):
@@ -40,7 +40,8 @@ func _process(_delta):
 		$Sprite3.flip_h = true
 	
 	if Input.is_action_just_pressed("interact") and is_interacting == 0:
-		GameController.load_arcade_control(GameController.ARCADE_TYPE.INVADOORS)
+		emit_signal("interact")
+		#GameController.load_arcade_control(GameController.ARCADE_TYPE.INVADOORS)
 		is_interacting = 20
 	if is_interacting > 0:
 		is_interacting -= 1
