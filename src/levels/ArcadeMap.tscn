@@ -248,6 +248,7 @@ position = Vector2( 602.262, 199.868 )
 scale = Vector2( 0.75, 0.75 )
 
 [node name="ScoreBoard" type="GridContainer" parent="."]
+visible = false
 margin_left = 571.0
 margin_top = -1.0
 margin_right = 654.0
