@@ -7,7 +7,7 @@
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 5.93617, 4.44226 )
 
-[sub_resource type="Animation" id=3]
+[sub_resource type="Animation" id=2]
 resource_name = "idle"
 length = 0.6
 loop = true
@@ -42,4 +42,4 @@ position = Vector2( 0.971759, 0.176235 )
 shape = SubResource( 1 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-anims/idle = SubResource( 3 )
+anims/idle = SubResource( 2 )
