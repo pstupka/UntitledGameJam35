@@ -1,6 +1,6 @@
 extends "res://src/scripts/Game.gd"
 
-var _player = preload("res://src/actors/handoids/Player.tscn")
+var _player = preload("res://src/actors/handoids/RigidPlayer.tscn")
 var _hand = preload("res://src/actors/handoids/Hand.tscn")
 
 var player
