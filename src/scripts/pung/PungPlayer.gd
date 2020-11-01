@@ -19,6 +19,9 @@ func _physics_process(_delta):
 func _process(_delta):
 	_direction = get_direction()
 
+func speedUp():
+	speed += 20
+
 func get_direction() -> Vector2:
 	return Vector2(
 		0,

@@ -46,7 +46,6 @@ func game_start():
 	player.clamp_x_position = 10
 	add_child(player)
 	
-	
 	player2 = _player2.instance()
 	player2.translate(Vector2(bounds_x-10,bounds_y*0.5))
 	player2.clamp_x_position = bounds_x-10
@@ -67,7 +66,7 @@ func game_over():
 	$HUD/GameOverLabel.show()
 #	score_label.set("custom_colors/font_color", Color(1,1,1))
 	
-	emit_signal("game_over", score, "PungGame")
+	emit_signal("game_over", score, "Pung")
 	var timer = get_tree().create_timer(3.0)
 	yield(timer, "timeout")
 	
@@ -81,7 +80,11 @@ func game_over():
 func scored():
 	score += 1
 	score_label.text = "%d" % score	
-
+	if score % 3 == 0:
+		player.speedUp()
+		player2.speedUp()
+		pungball.speedUp()
+		
 func register_buttons():
 	var buttons = get_tree().get_nodes_in_group("Buttons")
 	for button in buttons:

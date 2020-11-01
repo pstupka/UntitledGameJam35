@@ -17,7 +17,8 @@ func _physics_process(delta):
 	if collision:
 		_velocity = _velocity.bounce(collision.normal) + collision.collider_velocity.normalized()*0.2
 
-
+func speedUp():
+	speed += 20
 
 func _on_scoreArea_body_entered(body):
 	if body.is_in_group("PungPlayer"):
