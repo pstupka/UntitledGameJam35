@@ -2,6 +2,9 @@ extends StaticBody2D
 signal brick_destroyed;
 var _explosion = preload("res://src/levels/minigames/ExplosionParticles.tscn")
 
+func _ready():
+	add_to_group("AlleywayBrick")
+
 func _on_Area2D_body_exited(body):
 	emit_signal("brick_destroyed")
 	kill()

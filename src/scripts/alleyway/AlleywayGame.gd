@@ -6,7 +6,6 @@ var _brick = preload("res://src/actors/alleyway/Brick.tscn")
 
 var player
 var ball
-var bricks = []
 
 onready var score_label = $HUD/ScoreLabel
 onready var game_over_label = $HUD/GameOverLabel
@@ -27,6 +26,7 @@ func _ready():
 
 func game_start():
 	score = 0
+	difficulty = 1
 	$HUD/ScoreLabel.text = "%d" % score
 	$HUD/ScoreLabel.set_size(Vector2.ZERO)
 	
@@ -35,20 +35,7 @@ func game_start():
 	player.translate(Vector2(10,bounds_y - 10))
 	player.clamp_y_position = bounds_y - 10
 	add_child(player)
-	
-	# add bricks
-	var bricksX = 4
-	var bricksY = 8
-	
-	for col in range(bricksY):
-		for row in range(bricksX):
-			var brick = _brick.instance()
-			bricks.push_back(brick)
-			var offsetX = 75 * row;
-			var offsetY = 20 * col
-			brick.translate(Vector2( 60 + offsetX, 25 + offsetY ))
-			brick.connect("brick_destroyed", self, "on_brick_destroyed")
-			add_child(brick)
+	spawn_bricks()
 	start_prepare_phase();
 
 var prepareFlag = false
@@ -65,6 +52,19 @@ func _process(delta):
 	$HUD/Countdown.text = "%d" % ceil(prepareCountdown)
 	prepareCountdown -= delta;
 	
+func spawn_bricks():
+	# add bricks
+	var bricksX = 4
+	var bricksY = 8
+	
+	for col in range(bricksY):
+		for row in range(bricksX):
+			var brick = _brick.instance()
+			var offsetX = 75 * row;
+			var offsetY = 20 * col
+			brick.translate(Vector2( 60 + offsetX, 25 + offsetY ))
+			brick.connect("brick_destroyed", self, "on_brick_destroyed")
+			add_child(brick)
 
 func start_prepare_phase():
 	print("Prepare phase")
@@ -87,6 +87,7 @@ func game_over():
 	# remove actors
 	player.kill()
 	var i = 0;
+	var bricks = get_tree().get_nodes_in_group("AlleywayBrick")
 	for brick in bricks:
 		# don't crash on deleted bricks
 		if is_instance_valid(brick):
@@ -105,12 +106,21 @@ func game_over():
 	$Menu/MarginContainer/ColorRect/VBoxContainer/StartButton.grab_focus()
 	print("game_over")
 
+var difficulty = 1
 func on_brick_destroyed():
 	scored()
 	# speed up on each five
 	if score % 5 == 0:
-		ball.speedUp()
-		player.speedUp()
+		for i in range(difficulty):
+			ball.speedUp()
+			player.speedUp()
+	
+	var bricks = get_tree().get_nodes_in_group("AlleywayBrick")
+	if bricks.size() <= 1:
+		difficulty += 1
+		ball.kill()
+		spawn_bricks()
+		start_prepare_phase()
 		
 func scored():
 	score += 1
