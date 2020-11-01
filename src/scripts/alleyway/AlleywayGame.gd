@@ -95,7 +95,7 @@ func game_over():
 	
 	$HUD/GameOverLabel.show()
 	
-	emit_signal("game_over", score, "AlleywayGame")
+	emit_signal("game_over", score, GameController.ARCADE_TYPE.ALLEYWAY)
 	var timer = get_tree().create_timer(3.0)
 	yield(timer, "timeout")
 	

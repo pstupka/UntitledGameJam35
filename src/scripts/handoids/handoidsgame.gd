@@ -47,7 +47,8 @@ func spawnHand():
 	randomize()
 	var alpha = (randi() % 360) * PI / 180
 	var hand = _hand.instance()
-	hand.translate(Vector2(350 * cos(alpha), 350 * sin(alpha)))
+	# spawn the hand on a ring around the game area
+	hand.translate(Vector2(200 * cos(alpha) + bounds_x / 2, 200 * sin(alpha) + bounds_y / 2))
 	hand.scale /= handLevel
 	hand.moveToward(Vector2(bounds_x * 0.5, bounds_y * 0.5))
 	hand.connect("destroyed", self, "_on_hand_destroyed")
@@ -85,7 +86,7 @@ func game_over():
 	$HUD/GameOverLabel.show()
 #	score_label.set("custom_colors/font_color", Color(1,1,1))
 	
-	emit_signal("game_over", score, "HandoidGame")
+	emit_signal("game_over", score, GameController.ARCADE_TYPE.HANDOIDS)
 	var timer = get_tree().create_timer(3.0)
 	yield(timer, "timeout")
 	

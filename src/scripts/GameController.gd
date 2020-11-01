@@ -5,7 +5,10 @@ var _arcademap = preload("res://src/levels/ArcadeMap.tscn")
 var arcadeMap
 var _playerPosition
 
-var _scoreboard = {}
+var _scoreboard = {	ARCADE_TYPE.PUNG: 0,
+					ARCADE_TYPE.ALLEYWAY: 0, 
+					ARCADE_TYPE.HANDOIDS: 0, 
+					ARCADE_TYPE.PINVADOORS: 0}
 
 func keep_player_position(pos):
 	_playerPosition = pos

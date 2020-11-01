@@ -34,23 +34,28 @@ func _process(delta):
 	if _canFire > 0:
 		_canFire -= 1;
 		
-var thrust = Vector2(0, 150)
-var torque = 750
+var thrust = Vector2(0, 200)
+var torque = 1500
 const tpOffset = 10
 onready var parent = get_parent()
 
 func _integrate_forces(state):
-	if Input.is_action_pressed("move_up") and linear_velocity.length() < 120:
-		applied_force = thrust.rotated(rotation + PI)
-	elif Input.is_action_pressed("move_down") and linear_velocity.length() < 120:
-		applied_force = thrust.rotated(rotation)
+	# thrust
+	if linear_velocity.length() < 120:
+		if Input.is_action_pressed("move_up"):
+			applied_force = thrust.rotated(rotation + PI)
+		elif Input.is_action_pressed("move_down"):
+			applied_force = thrust.rotated(rotation)
 	else:
 		applied_force = Vector2()
+	
+	# rotation
 	var rotation_dir = 0
-	if Input.is_action_pressed("move_right"):
-		rotation_dir += 1
-	if Input.is_action_pressed("move_left"):
-		rotation_dir -= 1
+	if abs(angular_velocity) < 8:
+		if Input.is_action_pressed("move_right"):
+			rotation_dir += 1
+		if Input.is_action_pressed("move_left"):
+			rotation_dir -= 1
 	applied_torque = rotation_dir * torque
 
 	#  teleport. state.transform.origin is not working ??

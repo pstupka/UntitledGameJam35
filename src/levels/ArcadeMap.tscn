@@ -247,20 +247,25 @@ shape = SubResource( 16 )
 position = Vector2( 602.262, 199.868 )
 scale = Vector2( 0.75, 0.75 )
 
-[node name="ScoreBoard" type="MarginContainer" parent="."]
-visible = false
-margin_left = 585.0
+[node name="ScoreBoard" type="GridContainer" parent="."]
+margin_left = 571.0
 margin_top = -1.0
-margin_right = 625.0
+margin_right = 654.0
 margin_bottom = 67.0
+columns = 2
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Scorelabel" type="Label" parent="ScoreBoard"]
-margin_top = 27.0
-margin_right = 40.0
-margin_bottom = 41.0
+[node name="Games" type="Label" parent="ScoreBoard"]
+margin_right = 30.0
+margin_bottom = 14.0
+rect_min_size = Vector2( 30, 0 )
+
+[node name="Score" type="Label" parent="ScoreBoard"]
+margin_left = 34.0
+margin_right = 34.0
+margin_bottom = 14.0
 [connection signal="body_entered" from="ScoreboardArea" to="." method="_on_ScoreboardArea_body_entered"]
 [connection signal="body_exited" from="ScoreboardArea" to="." method="_on_ScoreboardArea_body_exited"]
 [connection signal="body_entered" from="PongMachine/PongArea" to="." method="_on_PongArea_body_entered"]

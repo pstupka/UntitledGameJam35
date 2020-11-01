@@ -56,9 +56,12 @@ func _on_AlleywayArea_body_exited(body):
 
 func prepare_scoreboard():
 	_scoreboard = GameController._get_scoreboard()
-	for game in _scoreboard:
-		var score =  _scoreboard[game]
-		$ScoreBoard/Scorelabel.text += game + " score: %d" % score + "\n";
+	# pls bez komentarza
+	$ScoreBoard/Games.text =  "Alleyway\nInvadoors\nPung\nHandoids"
+	$ScoreBoard/Score.text =  " score: %d" % _scoreboard[GameController.ARCADE_TYPE.ALLEYWAY] + "\n";
+	$ScoreBoard/Score.text += " score: %d" % _scoreboard[GameController.ARCADE_TYPE.PINVADOORS] + "\n";
+	$ScoreBoard/Score.text += " score: %d" % _scoreboard[GameController.ARCADE_TYPE.PUNG] + "\n";
+	$ScoreBoard/Score.text += " score: %d" % _scoreboard[GameController.ARCADE_TYPE.HANDOIDS];
 	
 func _on_ScoreboardArea_body_entered(body):
 	if body.is_in_group("MainPlayer"):

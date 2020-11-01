@@ -66,7 +66,7 @@ func game_over():
 	$HUD/GameOverLabel.show()
 #	score_label.set("custom_colors/font_color", Color(1,1,1))
 	
-	emit_signal("game_over", score, "Pung")
+	emit_signal("game_over", score, GameController.ARCADE_TYPE.PUNG)
 	var timer = get_tree().create_timer(3.0)
 	yield(timer, "timeout")
 	
