@@ -3,6 +3,7 @@ extends "res://src/scripts/Game.gd"
 var _player_res = preload("res://src/levels/minigames/invadoors/InvadoorsPlayer.tscn")
 var _enemy_res = preload("res://src/levels/minigames/invadoors/InvadoorsEnemy.tscn")
 var player
+var difficulty = 1;
 
 onready var score_label = $HUD/ScoreLabel
 onready var game_over_label = $HUD/GameOverLabel
@@ -29,6 +30,7 @@ func _physics_process(_delta):
 
 func game_start():
 	score = 0
+	difficulty = 1
 	$HUD/ScoreLabel.text = "score: %d" % 0
 
 	player = _player_res.instance()
@@ -52,7 +54,10 @@ func game_over():
 #	score_label.set("custom_colors/font_color", Color(1,1,1))
 	
 	emit_signal("game_over", score, GameController.ARCADE_TYPE.PINVADOORS)
-	var timer = get_tree().create_timer(3.0)
+	var interval = 4.0
+	if interval - difficulty > 0:
+		interval = interval - difficulty
+	var timer = get_tree().create_timer(interval)
 	yield(timer, "timeout")
 	
 	game_over_label.hide()
@@ -60,6 +65,14 @@ func game_over():
 	$Menu.show()
 	$Menu/MarginContainer/ColorRect/VBoxContainer/StartButton.grab_focus()
 
+func _on_enemy_killed():
+	scored()
+	var enemies = get_tree().get_nodes_in_group("InvadoorsEnemy")
+	# last one counts
+	if enemies.size() <= 1:
+		difficulty += 1
+		spawn_enemies()
+		
 func scored():
 	score += 10
 	score_label.text = "score: %d" % score	
@@ -88,7 +101,8 @@ func spawn_enemies():
 		enemy = _enemy_res.instance()
 		enemy.translate(Vector2(50 + i*32, 50))
 		enemy.scale = Vector2(2,2)
-		enemy.connect("killed", self, "scored")
+		enemy.connect("killed", self, "_on_enemy_killed")
+		enemy.set_difficulty(difficulty)
 		add_child(enemy)
 
 func _on_player_destroyed():

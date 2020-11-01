@@ -6,6 +6,8 @@ signal killed
 export var speed = 200
 var _shootCounter = 4; #[s]
 var _velocity = Vector2(-1, -0.1).normalized()
+var difficulty = 1;
+var first_shot = true
 export(PackedScene) var explosion
 
 # Called when the node enters the scene tree for the first time.
@@ -26,10 +28,25 @@ func _process(delta):
 		
 func get_shoot_counter():
 	randomize();
-	return (randf() * 3.0) + 2;
+	var random_interval = randf() * 3.0
+	if random_interval - difficulty / 2 > 0:
+		random_interval -= difficulty / 2
+	
+	var counter_offset = 2
+	if counter_offset - difficulty / 2 > 0:
+		counter_offset -= difficulty
+	
+	if first_shot:
+		counter_offset += 2.0
+		first_shot = false
+		
+	return random_interval + counter_offset;
 
 func tick_down():
 	position.y = position.y + 8
+
+func set_difficulty(_difficulty):
+	difficulty = _difficulty
 
 func kill():
 	emit_signal("killed")
