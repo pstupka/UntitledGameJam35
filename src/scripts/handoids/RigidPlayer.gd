@@ -63,7 +63,6 @@ func _integrate_forces(state):
 		sForm.origin = parent.to_global(Vector2(10, position.y))
 		state.set_transform(sForm)
 	if localpos.x < 0:
-		localpos.x = _bounds.x
 		sForm.origin = parent.to_global(Vector2(_bounds.x - 10, position.y))
 		state.set_transform(sForm)
 	if localpos.y > _bounds.y:
