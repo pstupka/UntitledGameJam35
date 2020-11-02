@@ -1,6 +1,6 @@
 extends StaticBody2D
 signal brick_destroyed;
-var _explosion = preload("res://src/levels/minigames/ExplosionParticles.tscn")
+var _explosion = preload("res://src/levels/minigames/CPUExplosionParticles.tscn")
 
 func _ready():
 	add_to_group("AlleywayBrick")

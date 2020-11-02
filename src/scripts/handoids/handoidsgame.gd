@@ -1,6 +1,6 @@
 extends "res://src/scripts/Game.gd"
 
-var _player = preload("res://src/actors/handoids/RigidPlayer.tscn")
+var _player = preload("res://src/actors/handoids/Player.tscn")
 var _hand = preload("res://src/actors/handoids/Hand.tscn")
 
 var player
@@ -28,6 +28,8 @@ func _ready():
 	connect("game_exit", GameController, "_on_arcade_game_exit")
 	
 func _process(delta):
+	if Input.is_action_just_pressed("arcade_button2"):
+		game_over()
 	if !gameInProgress:
 		return
 	# spawn hands
@@ -76,9 +78,9 @@ func game_start():
 
 func game_over():
 	gameInProgress = false;
-	player.kill()
+	if is_instance_valid(player):
+		player.kill()
 	# remove bricks
-	
 	for hand in get_tree().get_nodes_in_group("HandoidsHands"):
 		if is_instance_valid(hand):
 			hand.kill()

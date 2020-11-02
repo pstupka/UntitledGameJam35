@@ -48,8 +48,10 @@ func game_over():
 	# remove the actors
 	var enemies = get_tree().get_nodes_in_group("InvadoorsEnemy")
 	for enemy in enemies:
-		enemy.terminate()
-	player.terminate();
+		if is_instance_valid(enemy):
+			enemy.terminate()
+	if is_instance_valid(player):
+		player.terminate();
 	$HUD/GameOverLabel.show()
 #	score_label.set("custom_colors/font_color", Color(1,1,1))
 	
@@ -72,7 +74,11 @@ func _on_enemy_killed():
 	if enemies.size() <= 1:
 		difficulty += 1
 		spawn_enemies()
-		
+
+func _process(delta):
+	if Input.is_action_just_pressed("arcade_button2"):
+		game_over()
+
 func scored():
 	score += 10
 	score_label.text = "score: %d" % score	

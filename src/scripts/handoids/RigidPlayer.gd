@@ -1,7 +1,7 @@
 extends RigidBody2D
 
 var _projectile = preload("res://src/actors/handoids/Projectile.tscn")
-var _explosion = preload("res://src/levels/minigames/ExplosionParticles.tscn")
+var _explosion = preload("res://src/levels/minigames/CPUExplosionParticles.tscn")
 
 var _speed = 0
 var _acc = 0;
@@ -34,20 +34,20 @@ func _process(delta):
 	if _canFire > 0:
 		_canFire -= 1;
 		
-var thrust = Vector2(0, 200)
+var thrust = Vector2(0, 75)
 var torque = 1500
 const tpOffset = 10
 onready var parent = get_parent()
 
 func _integrate_forces(state):
 	# thrust
-	if linear_velocity.length() < 120:
+	if linear_velocity.length() < 75:
 		if Input.is_action_pressed("move_up"):
 			applied_force = thrust.rotated(rotation + PI)
 		elif Input.is_action_pressed("move_down"):
 			applied_force = thrust.rotated(rotation)
 	else:
-		applied_force = Vector2()
+		applied_force = Vector2.ZERO
 	
 	# rotation
 	var rotation_dir = 0
@@ -57,7 +57,7 @@ func _integrate_forces(state):
 		if Input.is_action_pressed("move_left"):
 			rotation_dir -= 1
 	applied_torque = rotation_dir * torque
-
+	
 	#  teleport. state.transform.origin is not working ??
 	if _bounds == Vector2.ZERO:
 		return;

@@ -75,8 +75,11 @@ func game_over():
 	score_label.hide()
 	$Menu.show()
 	$Menu/MarginContainer/ColorRect/VBoxContainer/StartButton.grab_focus()
-	
 	print("game_over")
+	
+func _process(delta):
+	if Input.is_action_just_pressed("arcade_button2"):
+		game_over()
 
 func scored():
 	score += 1

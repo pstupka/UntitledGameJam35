@@ -60,9 +60,12 @@ func game_start():
 	print("PungGame: game start")
 
 func game_over():
-	player.queue_free()
-	player2.queue_free()
-	pungball.queue_free()
+	if is_instance_valid(player):
+		player.queue_free()
+	if is_instance_valid(player2):
+		player2.queue_free()
+	if is_instance_valid(pungball):
+		pungball.queue_free()
 	$HUD/GameOverLabel.show()
 #	score_label.set("custom_colors/font_color", Color(1,1,1))
 	
@@ -74,8 +77,11 @@ func game_over():
 	score_label.hide()
 	$Menu.show()
 	$Menu/MarginContainer/ColorRect/VBoxContainer/StartButton.grab_focus()
-	
 	print("game_over")
+
+func _process(delta):
+	if Input.is_action_just_pressed("arcade_button2"):
+		game_over()
 
 func scored():
 	score += 1

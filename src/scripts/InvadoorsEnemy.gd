@@ -1,6 +1,6 @@
 extends KinematicBody2D
 var bullet_res = preload("res://src/levels/minigames/invadoors/Bullet.tscn")
-var _explosion = preload("res://src/levels/minigames/ExplosionParticles.tscn")
+var _explosion = preload("res://src/levels/minigames/CPUExplosionParticles.tscn")
 signal killed
 
 export var speed = 200
@@ -53,7 +53,7 @@ func kill():
 	terminate()
 
 func terminate():
-	var expl = explosion.instance()
+	var expl = _explosion.instance()
 	expl.emitting = true
 	expl.global_position = Vector2(self.position.x, self.position.y)
 	get_parent().add_child(expl)

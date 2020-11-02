@@ -1,6 +1,6 @@
 extends KinematicBody2D
 
-var _explosion = preload("res://src/levels/minigames/ExplosionParticles.tscn")
+var _explosion = preload("res://src/levels/minigames/CPUExplosionParticles.tscn")
 var bullet_res = preload("res://src/levels/minigames/invadoors/Bullet.tscn")
 export var speed = 200
 var _direction = Vector2.ZERO

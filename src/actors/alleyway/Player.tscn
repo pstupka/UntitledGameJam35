@@ -9,7 +9,7 @@ height = 57.661
 
 [node name="PungPlayer" type="KinematicBody2D"]
 rotation = 1.5708
-scale = Vector2( 0.75, 0.57 )
+scale = Vector2( 0.75, 0.66 )
 collision_mask = 7
 script = ExtResource( 1 )
 

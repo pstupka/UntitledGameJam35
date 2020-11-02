@@ -15,10 +15,13 @@ func keep_player_position(pos):
 
 func _ready():
 	arcadeMap = _arcademap.instance()
+	load_score()
 
 func _on_arcade_game_over(score, name):
-	_scoreboard[name] = score;
-
+	if _scoreboard[name] < score:
+		_scoreboard[name] = score;
+		save_score()
+	
 	print("Score ", score)
 	print("Name ", name)
 
@@ -47,3 +50,29 @@ func load_arcade_control(game):
 		ARCADE_TYPE.PINVADOORS:
 			arcade_to_load.load_game("res://src/levels/minigames/invadoors/InvadoorsGame.tscn", "res://assets/environment/arcade/arcade_view.png") 
 	SceneChanger.transition_to(arcade_to_load)
+
+
+# SHOULD STORE A JSON, BUT NO TIME
+const savepath = "user://untitledgamejam.save"
+func save_score():
+	var save_game = File.new()
+	save_game.open(savepath, File.WRITE)
+	for game in _scoreboard:
+		save_game.store_line("%d" % _scoreboard[game])
+	save_game.close()
+
+func load_score():
+	var save_game = File.new()
+	if not save_game.file_exists(savepath):
+		print("No saved file")
+		return		
+	save_game.open(savepath, File.READ)
+	for game in _scoreboard:
+		if save_game.get_position() < save_game.get_len():
+		 _scoreboard[game] = int(save_game.get_line())
+	save_game.close()
+
+func reset_score():
+	for game in _scoreboard:
+		_scoreboard[game] = 0
+	save_score()

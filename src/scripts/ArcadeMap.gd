@@ -21,6 +21,10 @@ func _on_player_interaction():
 	GameController.keep_player_position($Player.position)
 	GameController.load_arcade_control(_gameArea)
 
+func _process(delta):
+	if Input.is_action_just_pressed("arcade_button1"):
+		GameController.reset_score()
+		prepare_scoreboard();
 
 func _on_PongArea_body_entered(body):
 	if body.is_in_group("MainPlayer"):

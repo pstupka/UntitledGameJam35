@@ -41,6 +41,8 @@ func game_start():
 var prepareFlag = false
 var prepareCountdown = 3
 func _process(delta):
+	if Input.is_action_just_pressed("arcade_button2"):
+		game_over()
 	if !prepareFlag:
 		return;
 	
@@ -84,15 +86,19 @@ func start_game_phase():
 	print("AlleywayGame: game start")
 	
 func game_over():
+	prepareFlag = false
+	$HUD/Countdown.hide()
 	# remove actors
-	player.kill()
+	if is_instance_valid(player):
+		player.kill()
 	var i = 0;
 	var bricks = get_tree().get_nodes_in_group("AlleywayBrick")
 	for brick in bricks:
 		# don't crash on deleted bricks
 		if is_instance_valid(brick):
 			brick.kill();
-	ball.kill()
+	if is_instance_valid(ball):
+		ball.kill()
 	
 	$HUD/GameOverLabel.show()
 	

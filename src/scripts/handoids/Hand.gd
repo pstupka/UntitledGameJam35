@@ -1,6 +1,6 @@
 extends Area2D
 
-var _explosion = preload("res://src/levels/minigames/ExplosionParticles.tscn")
+var _explosion = preload("res://src/levels/minigames/CPUExplosionParticles.tscn")
 signal destroyed;
 
 var life = 2;
